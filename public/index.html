@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuminaLead // Lead Generation API Portal</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="logo-area">
+        <div class="logo-icon">
+          <i class="fa-solid fa-square-poll-vertical"></i>
+        </div>
+        <div class="logo-text">
+          <span class="brand-name">LuminaLead</span>
+          <span class="brand-tagline">API Engine v1.0</span>
+        </div>
+      </div>
+      
+      <nav class="nav-menu">
+        <a href="#overview" class="nav-item active" id="nav-overview">
+          <i class="fa-solid fa-chart-pie"></i> Overview
+        </a>
+        <a href="#campaigns" class="nav-item" id="nav-campaigns">
+          <i class="fa-solid fa-bullhorn"></i> Campaigns & Forms
+        </a>
+        <a href="#simulator" class="nav-item" id="nav-simulator">
+          <i class="fa-solid fa-laptop-code"></i> Form Simulator
+        </a>
+        <a href="#leads" class="nav-item" id="nav-leads">
+          <i class="fa-solid fa-user-tag"></i> Captured Leads
+        </a>
+        <a href="#contacts" class="nav-item" id="nav-contacts">
+          <i class="fa-solid fa-id-card"></i> CRM Contacts
+        </a>
+        <a href="#docs" class="nav-item" id="nav-docs">
+          <i class="fa-solid fa-book-bookmark"></i> API Reference
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-indicator">
+          <span class="pulse-dot"></span>
+          <span>API Server: Active</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top header bar -->
+      <header class="top-header">
+        <div class="header-title-area">
+          <h1 id="page-title">Dashboard Overview</h1>
+          <p id="page-description" class="subtitle">System health, performance metrics, and activity highlights.</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-secondary btn-icon-only" id="btn-refresh" title="Refresh Data">
+            <i class="fa-solid fa-arrows-rotate"></i>
+          </button>
+          <div class="user-pill">
+            <div class="user-avatar">AD</div>
+            <span>Admin Developer</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Views (Toggled by JS) -->
+      <div class="view-container">
+
+        <!-- 1. OVERVIEW VIEW -->
+        <section id="view-overview" class="content-view active">
+          <!-- Stats Grid -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon purple-glow"><i class="fa-solid fa-bullhorn"></i></div>
+              <div class="stat-info">
+                <span class="stat-label">Total Campaigns</span>
+                <span class="stat-value" id="stat-campaigns">0</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon blue-glow"><i class="fa-solid fa-rectangle-list"></i></div>
+              <div class="stat-info">
+                <span class="stat-label">Active Forms</span>
+                <span class="stat-value" id="stat-forms">0</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon green-glow"><i class="fa-solid fa-filter"></i></div>
+              <div class="stat-info">
+                <span class="stat-label">Leads Captured</span>
+                <span class="stat-value" id="stat-leads">0</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon orange-glow"><i class="fa-solid fa-id-card"></i></div>
+              <div class="stat-info">
+                <span class="stat-label">Unified Contacts</span>
+                <span class="stat-value" id="stat-contacts">0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mid Section Grid -->
+          <div class="content-grid-2col">
+            <!-- Recent Activity -->
+            <div class="glass-panel">
+              <div class="panel-header">
+                <h2><i class="fa-solid fa-timeline"></i> Recent Activity Log</h2>
+                <span class="badge badge-pulse">Live</span>
+              </div>
+              <div class="activity-timeline" id="recent-activity-list">
+                <div class="timeline-empty">Loading latest server activity...</div>
+              </div>
+            </div>
+
+            <!-- Database & Server Status Panel -->
+            <div class="glass-panel">
+              <div class="panel-header">
+                <h2><i class="fa-solid fa-server"></i> System Status</h2>
+              </div>
+              <div class="system-status-container">
+                <div class="status-item">
+                  <span class="status-name">Database Node</span>
+                  <div class="status-value-pill success"><i class="fa-solid fa-database"></i> SQLite Active</div>
+                </div>
+                <div class="status-item">
+                  <span class="status-name">ORM Version</span>
+                  <div class="status-value-pill info">Prisma Client 7.8</div>
+                </div>
+                <div class="status-item">
+                  <span class="status-name">REST Engine</span>
+                  <div class="status-value-pill info">Express Server 5.x</div>
+                </div>
+                <div class="status-item">
+                  <span class="status-name">Input Validator</span>
+                  <div class="status-value-pill info">Zod Schemas</div>
+                </div>
+                <div class="status-item">
+                  <span class="status-name">Response Latency</span>
+                  <div class="status-value-pill success"><i class="fa-solid fa-bolt"></i> &lt; 5ms</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- 2. CAMPAIGNS & FORMS VIEW -->
+        <section id="view-campaigns" class="content-view">
+          <div class="actions-bar">
+            <h2>Campaign Registry</h2>
+            <button class="btn btn-primary" id="btn-open-campaign-modal">
+              <i class="fa-solid fa-plus"></i> Create Campaign
+            </button>
+          </div>
+          
+          <div class="campaigns-grid" id="campaigns-grid-list">
+            <!-- Dynamically populated -->
+          </div>
+
+          <hr class="section-divider">
+
+          <div class="actions-bar">
+            <h2>Forms Registry</h2>
+            <button class="btn btn-primary" id="btn-open-form-modal">
+              <i class="fa-solid fa-plus"></i> Create Form
+            </button>
+          </div>
+          
+          <div class="forms-grid" id="forms-grid-list">
+            <!-- Dynamically populated -->
+          </div>
+        </section>
+
+
+        <!-- 3. SIMULATOR VIEW (THE SHIELD / API TESTING FRONTEND) -->
+        <section id="view-simulator" class="content-view">
+          <div class="content-grid-2col">
+            <!-- Form Simulator Panel -->
+            <div class="glass-panel">
+              <div class="panel-header">
+                <h2><i class="fa-solid fa-laptop-code"></i> Lead Capture Simulator</h2>
+                <p class="panel-subtitle">Select an active marketing campaign form to simulate a frontend client submission.</p>
+              </div>
+
+              <div class="simulator-config-section">
+                <div class="form-group">
+                  <label for="sim-form-select">Select Target Form</label>
+                  <select id="sim-form-select" class="form-control">
+                    <option value="" disabled selected>-- Choose a Lead Capture Form --</option>
+                    <!-- Dynamically populated -->
+                  </select>
+                </div>
+              </div>
+
+              <!-- Simulator Form Container (Rendered by JS based on Selected Form Fields Schema) -->
+              <form id="simulator-lead-form" class="simulator-form-container hidden">
+                <div class="form-section-title">Standard Lead Identifiers</div>
+                
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="sim-firstName">First Name <span class="required-asterisk">*</span></label>
+                    <input type="text" id="sim-firstName" class="form-control" placeholder="e.g. John" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="sim-lastName">Last Name</label>
+                    <input type="text" id="sim-lastName" class="form-control" placeholder="e.g. Smith">
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="sim-email">Email Address <span class="required-asterisk">*</span></label>
+                    <input type="email" id="sim-email" class="form-control" placeholder="e.g. john@domain.com" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="sim-phone">Phone Number</label>
+                    <input type="tel" id="sim-phone" class="form-control" placeholder="e.g. 9876543210">
+                  </div>
+                </div>
+
+                <!-- Custom Fields (Rendered here depending on form fields schema) -->
+                <div id="sim-custom-fields-container"></div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fa-solid fa-paper-plane"></i> Submit Form Data
+                  </button>
+                </div>
+              </form>
+              <div id="sim-no-form-placeholder" class="placeholder-box">
+                <i class="fa-solid fa-hands-pointing-up"></i>
+                <p>Please select a form from the drop-down menu above to load the simulator fields.</p>
+              </div>
+            </div>
+
+            <!-- API Console Logs (Real-time response inspect) -->
+            <div class="glass-panel console-panel">
+              <div class="panel-header">
+                <h2><i class="fa-solid fa-terminal"></i> API Console Output</h2>
+                <button class="btn btn-xs btn-secondary" id="btn-clear-console">Clear</button>
+              </div>
+              <div class="console-body">
+                <div class="console-tab-header">
+                  <div class="console-tab active" id="tab-request">Request Headers & Body</div>
+                  <div class="console-tab" id="tab-response">Response JSON</div>
+                </div>
+                <div class="console-content" id="console-view-area">
+                  <div class="console-placeholder">Waiting for a form submission...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- 4. LEADS VIEW -->
+        <section id="view-leads" class="content-view">
+          <div class="glass-panel">
+            <div class="panel-header flex-header">
+              <h2>Captured Leads Database</h2>
+              <div class="filter-actions">
+                <select id="filter-lead-campaign" class="form-control form-control-sm">
+                  <option value="">All Campaigns</option>
+                  <!-- Dynamically populated -->
+                </select>
+              </div>
+            </div>
+            
+            <div class="table-container">
+              <table class="data-table" id="leads-table">
+                <thead>
+                  <tr>
+                    <th>Lead Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Source Campaign & Form</th>
+                    <th>Custom Fields Submitted</th>
+                    <th>Status</th>
+                    <th>Captured At</th>
+                  </tr>
+                </thead>
+                <tbody id="leads-table-body">
+                  <tr>
+                    <td colspan="7" class="text-center">Loading captured leads...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- 5. CRM CONTACTS VIEW -->
+        <section id="view-contacts" class="content-view">
+          <div class="glass-panel">
+            <div class="panel-header">
+              <h2>CRM Unified Contacts</h2>
+              <p class="panel-subtitle">Consolidated profile registry syncing duplicate lead emails into a single customer profile.</p>
+            </div>
+            
+            <div class="table-container">
+              <table class="data-table" id="contacts-table">
+                <thead>
+                  <tr>
+                    <th>Contact Profile</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Latest Originating Lead ID</th>
+                    <th>CRM Internal Notes</th>
+                    <th>Last Synchronized</th>
+                  </tr>
+                </thead>
+                <tbody id="contacts-table-body">
+                  <tr>
+                    <td colspan="6" class="text-center">Loading contact records...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- 6. API REFERENCE VIEW (Interactive documentation) -->
+        <section id="view-docs" class="content-view">
+          <div class="docs-container">
+            
+            <div class="docs-section">
+              <h2 class="docs-title">Introduction</h2>
+              <p>Welcome to the <strong>LuminaLead REST API Reference</strong>. All requests must use the base URL of the active server. The Content-Type header must be set to <code>application/json</code>. Response formats are always returned in standardized JSON payloads containing success indicators, messages, and payloads.</p>
+            </div>
+
+            <!-- Endpoint Card 1: POST Leads Capture -->
+            <div class="endpoint-card">
+              <div class="endpoint-header">
+                <span class="method-badge post">POST</span>
+                <span class="endpoint-path">/api/leads/capture</span>
+                <span class="endpoint-summary">Submit Dynamic Form / Capture New Lead</span>
+              </div>
+              <div class="endpoint-body">
+                <p>This is the primary lead capture endpoint. It validates and sanitizes incoming fields using Zod and compiles submitted dynamic fields depending on form constraint profiles. It updates or creates CRM profiles based on unique email matches.</p>
+                
+                <h4>Request Body (JSON)</h4>
+                <pre class="json-code"><code>{
+  "firstName": "Alex",        // String, Required (min 1 char)
+  "lastName": "Russo",         // String, Optional
+  "email": "alex@domain.com",  // String, Required (validated email format)
+  "phone": "9876543210",       // String, Optional (validated 10-digit format)
+  "campaignId": "uuid-string", // String, Optional (validated UUID)
+  "formId": "uuid-string",     // String, Optional (validated UUID)
+  "submittedData": {           // Object, Optional
+    "companyName": "Acme Inc", // Custom fields depending on Form requirements
+    "teamSize": 25
+  }
+}</code></pre>
+
+                <h4>Success Response (201 Created)</h4>
+                <pre class="json-code"><code>{
+  "success": true,
+  "message": "Lead captured successfully",
+  "data": {
+    "lead": {
+      "id": "c1a6b0c2-7cb7-4f6b-9cde-f13ad664ef5a",
+      "campaignId": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "formId": "a1f9ebd8-5e4c-4a3d-b2b0-cb6d3d7b4bad",
+      "firstName": "Alex",
+      "lastName": "Russo",
+      "email": "alex@domain.com",
+      "phone": "9876543210",
+      "status": "NEW",
+      "submittedData": {
+        "companyName": "Acme Inc",
+        "teamSize": 25
+      },
+      "createdAt": "2026-06-15T09:05:00.000Z",
+      "updatedAt": "2026-06-15T09:05:00.000Z"
+    },
+    "contact": {
+      "id": "e4f0c978-87da-4dc3-81b0-2b0d3d7bcda2",
+      "leadId": "c1a6b0c2-7cb7-4f6b-9cde-f13ad664ef5a",
+      "firstName": "Alex",
+      "lastName": "Russo",
+      "email": "alex@domain.com",
+      "phone": "9876543210",
+      "notes": "Profile initialized from captured lead on 6/15/2026",
+      "createdAt": "2026-06-15T09:05:00.000Z",
+      "updatedAt": "2026-06-15T09:05:00.000Z"
+    }
+  }
+}</code></pre>
+              </div>
+            </div>
+
+            <!-- Endpoint Card 2: GET Leads -->
+            <div class="endpoint-card">
+              <div class="endpoint-header">
+                <span class="method-badge get">GET</span>
+                <span class="endpoint-path">/api/leads</span>
+                <span class="endpoint-summary">Retrieve Captured Leads Registry</span>
+              </div>
+              <div class="endpoint-body">
+                <p>Retrieves all captured leads. Supports optional query filtering by Campaign or Form ID.</p>
+                <h4>Query Parameters</h4>
+                <table class="params-table">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Type</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><code>campaignId</code></td>
+                      <td>String (UUID)</td>
+                      <td>Filter leads belonging to a specific campaign.</td>
+                    </tr>
+                    <tr>
+                      <td><code>formId</code></td>
+                      <td>String (UUID)</td>
+                      <td>Filter leads captured via a specific form.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Endpoint Card 3: GET Contacts -->
+            <div class="endpoint-card">
+              <div class="endpoint-header">
+                <span class="method-badge get">GET</span>
+                <span class="endpoint-path">/api/contacts</span>
+                <span class="endpoint-summary">List Unified CRM Contacts</span>
+              </div>
+              <div class="endpoint-body">
+                <p>Retrieves the consolidated CRM contacts registry, displaying unified profiles sorted by latest sync update.</p>
+              </div>
+            </div>
+
+            <!-- Endpoint Card 4: POST Campaigns -->
+            <div class="endpoint-card">
+              <div class="endpoint-header">
+                <span class="method-badge post">POST</span>
+                <span class="endpoint-path">/api/campaigns</span>
+                <span class="endpoint-summary">Create Marketing Campaign</span>
+              </div>
+              <div class="endpoint-body">
+                <p>Creates a marketing campaign to organize forms and capture channels.</p>
+                <h4>Request Body</h4>
+                <pre class="json-code"><code>{
+  "name": "Social Media Ad Outreach", // String, Required (min 3 chars)
+  "description": "Outreach from Facebook and Instagram ads.", // String, Optional
+  "status": "ACTIVE" // Enum ("ACTIVE", "PAUSED", "COMPLETED"), Optional (default ACTIVE)
+}</code></pre>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Create Campaign Modal -->
+  <div class="modal-backdrop hidden" id="campaign-modal">
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h3>Create Marketing Campaign</h3>
+        <button class="modal-close" id="btn-close-campaign-modal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="create-campaign-form">
+        <div class="form-group">
+          <label for="campaign-name">Campaign Name <span class="required-asterisk">*</span></label>
+          <input type="text" id="campaign-name" class="form-control" placeholder="e.g. Q4 Google Search Ads" required>
+        </div>
+        <div class="form-group">
+          <label for="campaign-desc">Description</label>
+          <textarea id="campaign-desc" class="form-control" rows="3" placeholder="Describe the goals and tracking details of this campaign..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="campaign-status">Status</label>
+          <select id="campaign-status" class="form-control">
+            <option value="ACTIVE">ACTIVE</option>
+            <option value="PAUSED">PAUSED</option>
+            <option value="COMPLETED">COMPLETED</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-campaign-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Campaign</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Create Form Modal -->
+  <div class="modal-backdrop hidden" id="form-modal">
+    <div class="modal-panel modal-lg">
+      <div class="modal-header">
+        <h3>Create Dynamic Lead Capture Form</h3>
+        <button class="modal-close" id="btn-close-form-modal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="create-form-form">
+        <div class="form-group">
+          <label for="form-campaign-select">Link to Campaign <span class="required-asterisk">*</span></label>
+          <select id="form-campaign-select" class="form-control" required>
+            <option value="" disabled selected>-- Select campaign to bind form --</option>
+            <!-- Dynamically populated -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="form-name">Form Display Name <span class="required-asterisk">*</span></label>
+          <input type="text" id="form-name" class="form-control" placeholder="e.g. Inbound Newsletter Subscribe" required>
+        </div>
+        
+        <!-- Dynamic Schema Builder -->
+        <div class="form-schema-builder-section">
+          <div class="builder-header">
+            <h4>Dynamic Form Fields Schema</h4>
+            <button type="button" class="btn btn-xs btn-secondary" id="btn-add-schema-field">
+              <i class="fa-solid fa-plus"></i> Add Field
+            </button>
+          </div>
+          <p class="builder-instructions">Define the custom fields users must supply. Default fields (First Name, Email, Phone) are automatically included in lead capture.</p>
+          
+          <div class="schema-fields-list" id="schema-fields-list-container">
+            <!-- First item initialized dynamically by JS -->
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-form-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Form</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JS Logic -->
+  <script src="app.js"></script>
+</body>
+</html>

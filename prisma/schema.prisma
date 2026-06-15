@@ -1,0 +1,64 @@
+datasource db {
+  provider = "sqlite"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated"
+}
+
+// 1. Campaigns: Represents marketing campaigns grouping forms and leads
+model Campaign {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  status      String   @default("ACTIVE") // ACTIVE, PAUSED, COMPLETED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  forms       Form[]
+  leads       Lead[]
+}
+
+// 2. Forms: Represents dynamic lead capture forms belonging to a campaign
+model Form {
+  id          String   @id @default(uuid())
+  campaignId  String
+  campaign    Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  name        String
+  fields      String   // JSON string representing field validation config (e.g., label, type, required)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  leads       Lead[]
+}
+
+// 3. Leads: Represents a lead capture event (form submission)
+model Lead {
+  id            String   @id @default(uuid())
+  formId        String?
+  form          Form?    @relation(fields: [formId], references: [id], onDelete: SetNull)
+  campaignId    String?
+  campaign      Campaign? @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  firstName     String
+  lastName      String?
+  email         String
+  phone         String?
+  status        String   @default("NEW") // NEW, CONTACTED, QUALIFIED, UNQUALIFIED
+  submittedData String   // JSON string containing all dynamically submitted fields
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  contacts      Contact[]
+}
+
+// 4. Contacts: Represents CRM unified contact profiles, linked to their originating Lead
+model Contact {
+  id        String   @id @default(uuid())
+  leadId    String?
+  lead      Lead?    @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  firstName String
+  lastName  String?
+  email     String   @unique
+  phone     String?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
